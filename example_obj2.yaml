@@ -1,0 +1,21 @@
+apiVersion: drinks.example.com/v1alpha1
+kind: Coffee
+metadata:
+  name: cappuccino
+spec:
+  deploymentName: coffee-service
+  envVars:
+  - name: ROAST_LEVEL
+    value: dark
+# ---
+# apiVersion: drinks.example.com/v1alpha1
+# kind: Tea
+# metadata:
+#   name: earl_grey
+# spec:
+#   deploymentName: tea-brewer
+#   envVars:
+#   - name: TEA_STRENGTH
+#     value: strong
+#   - name: FLAVOR
+#     value: bergamot
