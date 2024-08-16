@@ -4,7 +4,7 @@ from kubernetes.client.api import core_v1_api
 # Define handler functions for Coffee and Tea CRDs
 
 @on.update('drinks.example.com', 'v1alpha1', 'coffee')
-def update_coffee(coffee, logger, **kwargs):
+def update_coffee(coffee, **kwargs):
   deployment_name = coffee.spec.get('deploymentName')
   env_vars = coffee.spec.get('envVars', [])
 
