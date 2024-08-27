@@ -1,6 +1,0 @@
-apiVersion: cache.ttl.sh/v1alpha1
-kind: Memcached
-metadata:
-  name: memcached-sample
-spec:
-  size: 3

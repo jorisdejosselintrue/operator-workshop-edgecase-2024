@@ -1,0 +1,11 @@
+apiVersion: divebar.ghcr.io/v1alpha1
+kind: Coffee
+metadata:
+  labels:
+    app.kubernetes.io/name: waiter-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: coffee-sample
+spec:
+  size: 1
+  coffee:
+    amount: 5

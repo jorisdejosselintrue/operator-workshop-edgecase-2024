@@ -1,0 +1,31 @@
+---
+# tasks file for Coffee
+- name: start the bar
+  kubernetes.core.k8s:
+    definition:
+      kind: Deployment
+      apiVersion: apps/v1
+      metadata:
+        name: '{{ ansible_operator_meta.name }}-bar'
+        namespace: '{{ ansible_operator_meta.namespace }}'
+      spec:
+        replicas: "{{ size }}"
+        selector:
+          matchLabels:
+            app: bar
+        template:
+          metadata:
+            labels:
+              app: bar
+          spec:
+            containers:
+            - name: bar
+              command:
+              - sleep
+              - infinity
+              image: "docker.io/alpine"
+              ports:
+                - containerPort: 80
+              env:
+              - name: COFFEE
+                value: "{{ coffee.amount }}"

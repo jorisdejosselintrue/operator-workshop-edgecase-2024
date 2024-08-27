@@ -1,7 +1,0 @@
----
-# Use the 'create api' subcommand to add watches to this file.
-- version: v1alpha1
-  group: cache.ttl.sh
-  kind: Memcached
-  role: memcached
-#+kubebuilder:scaffold:watch
