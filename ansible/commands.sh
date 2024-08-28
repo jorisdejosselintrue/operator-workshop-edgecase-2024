@@ -3,9 +3,9 @@ cd waiter-operator
 operator-sdk init --domain ghcr.io --plugins ansible
 operator-sdk create api --group divebar --version v1alpha1 --kind Coffee --generate-role
 
-make docker-build docker-push IMG="ghcr.io/jorisdejosselintrue/waiter-operator:v0.0.1"
+make docker-build docker-push IMG="ghcr.io/jorisdejosselintrue/waiter-operator:v0.0.2"
 make install
-make deploy IMG=ghcr.io/jorisdejosselintrue/waiter-operator:v0.0.1
+make deploy IMG=ghcr.io/jorisdejosselintrue/waiter-operator:v0.0.2
 
 kustomize build config/default
 

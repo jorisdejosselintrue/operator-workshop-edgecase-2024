@@ -20,12 +20,22 @@
           spec:
             containers:
             - name: bar
-              command:
-              - sleep
-              - infinity
-              image: "docker.io/alpine"
+              # command:
+              # - sleep
+              # - infinity
+              image: "ttl.sh/joriswebsitetest"
               ports:
-                - containerPort: 80
+                - containerPort: 5000
               env:
-              - name: COFFEE
+              - name: NUMBER_OF_DRINKS
                 value: "{{ coffee.amount }}"
+- name: Expose Flask port with ClusterIP
+  kubernetes.core.k8s_service:
+    state: present
+    name: '{{ ansible_operator_meta.name }}-bar'
+    namespace: '{{ ansible_operator_meta.namespace }}'
+    ports:
+    - port: 5000
+      protocol: TCP
+    selector:
+      app: bar

@@ -63,6 +63,7 @@ spec:
         - --leader-election-id=waiter-operator
         image: controller:latest
         name: manager
+        imagePullPolicy: Always
         env:
         - name: ANSIBLE_GATHERING
           value: explicit
