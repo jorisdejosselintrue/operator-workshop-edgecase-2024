@@ -1,2 +1,20 @@
 ---
 # vars file for Coffee
+size: 1
+ansible_operator_meta:
+  name: waiter-operator
+  namespace: waiter-operator-system
+drinks:
+  coffee:
+    strength: strong
+  beer:
+    amount: 1
+    type: IPA
+  tea:
+    amount: 1
+    flavor: green
+  whisky:
+    amount: 1
+    flavor: green
+  barman:
+    amount_of_drinks_drunken: 10

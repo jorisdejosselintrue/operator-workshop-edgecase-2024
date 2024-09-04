@@ -20,15 +20,34 @@
           spec:
             containers:
             - name: bar
-              # command:
-              # - sleep
-              # - infinity
               image: "ttl.sh/joriswebsitetest"
+              imagePullPolicy: Always
               ports:
                 - containerPort: 5000
               env:
-              - name: NUMBER_OF_DRINKS
-                value: "{{ coffee.amount }}"
+              # Define the environment variable
+              - name: DRINKS
+                valueFrom:
+                  configMapKeyRef:
+                    # The ConfigMap containing the value you want to assign to SPECIAL_LEVEL_KEY
+                    name: '{{ ansible_operator_meta.name }}-bar'
+                    # Specify the key associated with the value
+                    key: drinks
+- name: Create configmap using server side apply
+  kubernetes.core.k8s:
+    namespace: '{{ ansible_operator_meta.namespace }}'
+    definition:
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: '{{ ansible_operator_meta.name }}-bar'
+      data:
+        drinks: |
+            {{ drinks | to_json }}
+    server_side_apply:
+      field_manager: ansible
+  notify:
+    - restart deployment
 - name: Expose Flask port with ClusterIP
   kubernetes.core.k8s_service:
     state: present
