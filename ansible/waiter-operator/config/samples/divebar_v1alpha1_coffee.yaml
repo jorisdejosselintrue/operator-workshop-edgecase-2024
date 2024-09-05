@@ -7,20 +7,18 @@ metadata:
   name: coffee-sample
 spec:
   size: 1
-  drinks-json: '{ "coffee": {"strength": "strong"}, "beer": {"type": "IPA"}, "tea": {"flavor": "green"} }'
   drinks:
     coffee:
       strength: strong
     beer:
+      amount: 1
       type: IPA
     tea:
+      amount: 1
       flavor: green
+    whisky:
+      amount: 1
+      flavor: green
+    barman:
+      amount_of_drinks_drunken: 10
 
-  # env:
-  #   variables: |
-  #     - name: COFFEE_STRENGTH
-  #       value: "strong"
-  #     - name: BEER_TYPE
-  #       value: "IPA"
-  #     - name: TEA_FLAVOR
-  #       value: "green"
