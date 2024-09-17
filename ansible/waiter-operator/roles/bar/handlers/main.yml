@@ -1,5 +1,5 @@
 ---
-# handlers file for Coffee
+# handlers file for Bar
 - name: restart deployment
   ansible.builtin.shell:
     cmd: '/opt/ansible/kubectl rollout restart deployment {{ ansible_operator_meta.name }}-bar'

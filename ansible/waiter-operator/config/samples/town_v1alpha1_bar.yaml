@@ -1,11 +1,12 @@
-apiVersion: divebar.ghcr.io/v1alpha1
-kind: Coffee
+apiVersion: town.ghcr.io/v1alpha1
+kind: Bar
 metadata:
   labels:
     app.kubernetes.io/name: waiter-operator
     app.kubernetes.io/managed-by: kustomize
-  name: coffee-sample
+  name: bar-sample
 spec:
+  #image: ttl.sh/joriswebsitetest:0.0.1
   size: 1
   drinks:
     coffee:
@@ -21,4 +22,3 @@ spec:
       flavor: green
     barman:
       amount_of_drinks_drunken: 10
-

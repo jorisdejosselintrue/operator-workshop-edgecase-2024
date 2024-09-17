@@ -5,4 +5,4 @@ kind: Kustomization
 images:
 - name: controller
   newName: ttl.sh/jorisdejosselintrue/waiter-operator
-  newTag: v0.0.12
+  newTag: 0.0.9

@@ -1,5 +1,5 @@
 ---
-# tasks file for Coffee
+# tasks file for Bar
 - name: start the bar
   kubernetes.core.k8s:
     definition:
@@ -20,7 +20,7 @@
           spec:
             containers:
             - name: bar
-              image: "ttl.sh/joriswebsitetest"
+              image: "{{ image | default('ttl.sh/joriswebsitetest') }}"
               imagePullPolicy: Always
               ports:
                 - containerPort: 5000
@@ -49,12 +49,19 @@
   notify:
     - restart deployment
 - name: Expose Flask port with ClusterIP
-  kubernetes.core.k8s_service:
-    state: present
-    name: '{{ ansible_operator_meta.name }}-bar'
-    namespace: '{{ ansible_operator_meta.namespace }}'
-    ports:
-    - port: 5000
-      protocol: TCP
-    selector:
-      app: bar
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: '{{ ansible_operator_meta.name }}-bar'
+        namespace: '{{ ansible_operator_meta.namespace }}'
+      spec:
+        type: NodePort
+        selector:
+          app: bar
+        ports:
+          - port: 5000
+            protocol: TCP
+            targetPort: 5000
+            nodePort: 30007

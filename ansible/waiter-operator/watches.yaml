@@ -1,7 +1,7 @@
 ---
 # Use the 'create api' subcommand to add watches to this file.
 - version: v1alpha1
-  group: divebar.ghcr.io
-  kind: Coffee
-  role: coffee
+  group: town.ghcr.io
+  kind: Bar
+  role: bar
 #+kubebuilder:scaffold:watch

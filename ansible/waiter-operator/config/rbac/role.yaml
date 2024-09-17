@@ -40,14 +40,14 @@ rules:
       - update
       - watch
   ##
-  ## Rules for divebar.ghcr.io/v1alpha1, Kind: Coffee
+  ## Rules for town.ghcr.io/v1alpha1, Kind: Bar
   ##
   - apiGroups:
-      - divebar.ghcr.io
+      - town.ghcr.io
     resources:
-      - coffees
-      - coffees/status
-      - coffees/finalizers
+      - bars
+      - bars/status
+      - bars/finalizers
     verbs:
       - create
       - delete

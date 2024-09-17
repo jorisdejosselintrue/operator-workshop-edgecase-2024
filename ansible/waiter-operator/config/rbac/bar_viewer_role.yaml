@@ -1,27 +1,23 @@
-# permissions for end users to edit coffees.
+# permissions for end users to view bars.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
     app.kubernetes.io/name: waiter-operator
     app.kubernetes.io/managed-by: kustomize
-  name: coffee-editor-role
+  name: bar-viewer-role
 rules:
 - apiGroups:
-  - divebar.ghcr.io
+  - town.ghcr.io
   resources:
-  - coffees
+  - bars
   verbs:
-  - create
-  - delete
   - get
   - list
-  - patch
-  - update
   - watch
 - apiGroups:
-  - divebar.ghcr.io
+  - town.ghcr.io
   resources:
-  - coffees/status
+  - bars/status
   verbs:
   - get

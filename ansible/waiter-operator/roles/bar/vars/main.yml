@@ -1,5 +1,5 @@
 ---
-# vars file for Coffee
+# vars file for Bar
 size: 1
 ansible_operator_meta:
   name: waiter-operator

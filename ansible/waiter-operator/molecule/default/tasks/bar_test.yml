@@ -1,5 +1,5 @@
 ---
-- name: Create the divebar.ghcr.io/v1alpha1.Coffee
+- name: Create the town.ghcr.io/v1alpha1.Bar
   k8s:
     state: present
     namespace: '{{ namespace }}'
@@ -10,7 +10,7 @@
       type: Successful
       status: "True"
   vars:
-    cr_file: 'divebar_v1alpha1_coffee.yaml'
+    cr_file: 'town_v1alpha1_bar.yaml'
 
 - name: Add assertions here
   assert:

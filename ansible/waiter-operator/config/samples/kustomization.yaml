@@ -1,4 +1,4 @@
 ## Append samples of your project ##
 resources:
-- divebar_v1alpha1_coffee.yaml
+- town_v1alpha1_bar.yaml
 #+kubebuilder:scaffold:manifestskustomizesamples
