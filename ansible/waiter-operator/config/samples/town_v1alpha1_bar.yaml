@@ -19,6 +19,6 @@ spec:
       flavor: green
     whisky:
       amount: 1
-      flavor: green
+      flavor: japaneseWood
     barman:
-      amount_of_drinks_drunken: 10
+      amount_of_drinks_drunken: 0

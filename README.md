@@ -57,6 +57,8 @@ DOCKERNOTE: macOS currently has an [issue](https://github.com/docker/cli/issues/
 
 ## Assignments
 
+It is recommend throughout these tasks to use tools like [k9s](https://k9scli.io/topics/install/) or just the regular command `k get pod -w` in another window to keep track of what is happening when you apply certain commands.
+
 ### 1. Install the operator
 
 ```bash
@@ -67,13 +69,60 @@ make deploy IMG=ghrc.io/jorisdejosselintrue/waiter-operator:latest
 ### 2. Install CRD and use it
 First lets switch to the namespace where the operator is installed:
 ```bash
-kubectl config set-context --current --namespace=waiter-operator
+❯ kubectl config set-context --current --namespace=waiter-operator
 ```
 
 Now we can apply the CRD so that the underlying app the operator controls will be deployed:
 ```bash
-kubectl apply -f config/samples/town_v1alpha1_bar.yaml
+❯ kubectl apply -f config/samples/town_v1alpha1_bar.yaml
 ```
+
+Now this should have deployed a pod next to the operator controller pod called bar-sample:
+```bash
+❯ kubectl get pod
+NAME                                                  READY   STATUS    RESTARTS   AGE
+bar-sample-bar-54759bd4d-mpg4n                        1/1     Running   0          63s
+waiter-operator-controller-manager-659c77dd4c-vz8gg   2/2     Running   0          3m4s
+```
+
+If you have verified that the pod is running you can run the following minikube command to forward traffic to the pod with:
+```bash
+minikube service bar-sample-bar -n waiter-operator-system
+```
+This should start your default browser with the website that has just been setup by the operator.
+
+Now look at the applied CRD with:
+```bash
+❯ kubectl get bars.town.ghcr.io bar-sample -o yaml
+apiVersion: town.ghcr.io/v1alpha1
+kind: Bar
+metadata:
+...
+spec:
+  drinks:
+    barman:
+      amount_of_drinks_drunken: 10
+    beer:
+      amount: 1
+      type: IPA
+    coffee:
+      strength: strong
+    tea:
+      amount: 1
+      flavor: green
+    whisky:
+      amount: 1
+      flavor: japaneseWood
+  size: 1
+...
+```
+The values shown should be the same as on the website.
+
+Now you can edit a value in the crd and for example set the amount of whisky to 5:
+```bash
+kubectl edit bar.town.ghcr.io bar-sample
+```
+Now if you are checking in another terminal what is happening when you edit the CRD in the `waiter-operator-system` namespace you will see that he pod is getting restarted on edits. If the new pod is healthy you will see the changes you have made.
 
 ## Cleanup
 
