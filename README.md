@@ -1,3 +1,4 @@
+
 # Operator workshop edgecase 2024
 
 This repository contains assignments and examples for using custom operators with Minikube. These exercises will help you understand how to develop, deploy, and manage Kubernetes operators in a local development environment.
@@ -9,11 +10,11 @@ Before you begin, ensure you have the following tools installed:
 - [Minikube](https://minikube.sigs.k8s.io/docs/start/)
 - [kubectl](https://kubernetes.io/docs/tasks/tools/)
 - [Docker](https://docs.docker.com/get-docker/) or [Podman](https://podman.io/docs/installation)
-- [Make](https://www.gnu.org/software/make/) which for Windows you can install the binary from [here](https://gnuwin32.sourceforge.net/packages/make.htm) but we would reccommend using [Ubuntu WSL for Windows](https://ubuntu.com/desktop/wsl)
+- [Make](https://www.gnu.org/software/make/) which for Windows you can install the binary from [here](https://gnuwin32.sourceforge.net/packages/make.htm) but we would recommend using [Ubuntu WSL for Windows](https://ubuntu.com/desktop/wsl)
 
-NOTE: You can use virtualization things like `Virtualbox` and `Vmware Fusion` but with these but probably the command `minikube service <svc> -n <namespace>` will not work anymore. You will have to use `kubectl port-forward -n <namespace> <svc>` instead, which unfortanetly will have to be killed and restarted every time the CRD is edited.
+NOTE: You can use virtualization tools like `VirtualBox` and `VMware Fusion`, but with these, the command `minikube service <svc> -n <namespace>` will probably not work anymore. You will have to use `kubectl port-forward -n <namespace> <svc>` instead, which unfortunately will have to be killed and restarted every time the CRD is edited.
 
-DOCKERNOTE: MacOS currently has an [issue](https://github.com/docker/cli/issues/5412) on the latest version of Docker desktop that makes installs hang. If using MacOS it is recommended to use Podman instead.
+DOCKERNOTE: macOS currently has an [issue](https://github.com/docker/cli/issues/5412) on the latest version of Docker Desktop that makes installs hang. If using macOS, it is recommended to use Podman instead.
 
 ## Repository Structure
 
@@ -21,17 +22,17 @@ DOCKERNOTE: MacOS currently has an [issue](https://github.com/docker/cli/issues/
 .
 ├── .gitignore
 ├── README.md
-└── ansible
-    ├── application
+└── ansible/
+    ├── application/
     ├── commands.sh
-    └── waiter-operator
+    └── waiter-operator/
 ```
 
 ## Getting Started
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/jorisdejosselintrue/operator-workshop-edgecase-2024.git
+   git clone https://github.com/your-username/operator-workshop-edgecase-2024.git
    cd operator-workshop-edgecase-2024
    ```
 
@@ -49,7 +50,7 @@ DOCKERNOTE: MacOS currently has an [issue](https://github.com/docker/cli/issues/
    ```
    Should give you something like the following output:
    ```bash
-   ❯ k get nodes
+   ❯ kubectl get nodes
     NAME       STATUS   ROLES           AGE   VERSION
     minikube   Ready    control-plane   53s   v1.31.0
    ```
@@ -78,6 +79,6 @@ kubectl apply -f config/samples/town_v1alpha1_bar.yaml
 
 To remove all resources created during the assignments, run:
 
-```
+```bash
 ./scripts/cleanup.sh
 ```
