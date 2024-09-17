@@ -1,32 +1,64 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Drinks Menu</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-            padding: 20px;
-        }
-
-        .drink-card {
-            background-color: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-            margin-bottom: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
 </head>
 <body>
-    <h1>Drinks Menu</h1>
-    {% for drink, details in drinks.items() %}
-    <div class="drink-card">
-        <h2>{{ drink.capitalize() }}</h2>
-        {% for key, value in details.items() %}
-        <p>{{ key.capitalize() }}: {{ value }}</p>
-        {% endfor %}
+  <section class="section">
+    <div class="container">
+      <h1 class="title">Drinks Menu</h1>
+
+      <div class="grid">
+
+        {% if drinks %}
+          {% for drink, details in drinks.items() %}
+
+            <div class="cell">
+              <div class="card">
+              <div class="card-image">
+                <figure class="image is-4by3">
+                    <img src="/static/{{ drink.lower() }}.jpg" />
+                </figure>
+              </div>
+                <div class="card-content">
+                  <div class="media">
+                    <div class="media-content">
+                      <p class="title is-4">{{ drink.capitalize() }}</p>
+                    </div>
+                  </div>
+                </div>
+                <footer class="card-footer">
+
+                  {% for key, value in details.items() %}
+                  <p class="card-footer-item">
+                    <span>
+                      <b>{{ key.capitalize() }}</b><br/>
+                      {{ value }}
+                    </span>
+                  </p>
+                  {% endfor %}
+                </footer>
+              </div>
+            </div>
+
+          {% endfor %}
+
+        {% else %}
+
+            <div class="notification is-danger">
+                <button class="delete"></button>
+                No drink information could be retrieved
+            </div>
+
+        {% endif %}
+
+      </div>
+
     </div>
-    {% endfor %}
+  </section>
+
 </body>
 </html>
