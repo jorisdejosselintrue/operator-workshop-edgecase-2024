@@ -135,7 +135,7 @@ Now please make Jona stop '''''helping'''''. # Hint: in Ansible if you want to r
 
 Here is the solution directly if you are weak willed:
 <details>
-  <summary>Click me</summary>
+  <summary>Reveal me</summary>
   The following cronjob is the one spanning the job that makes the barman drunk (Adds an integer):
 
   ```
@@ -144,21 +144,24 @@ Here is the solution directly if you are weak willed:
   bestbarintown-jona-helper   */1 * * * *   <none>     False     0        <none>          44s
   ```
 
-  In the 'Add the Jona helper' task in the 'ansible/waiter-operator/roles/bar/tasks/main.yml' file, you can see the following state being set as 'present' by default.
+  In the 'Add the Jona helper' task in the 'ansible/waiter-operator/roles/bar/tasks/main.yml' file, you can see the following state being set as 'present' by default:
+
+  ```
+  - name: Add the Jona helper
+    kubernetes.core.k8s:
+      state: "{{ stopitjona | default('present') }}"
+  ```
 
   You can disable the cronjob with the following patch on the CRD:
 
+  ```
   kubectl patch Bar bestbarintown --type='merge' -p '{"spec": { "stopitjona": "absent" } }'
+  ```
 
   After waiting a bit the cronjob should not be there anymore:
+
+  ```
   ❯ k get cronjobs.batch
   No resources found in waiter-operator-system namespace.
+  ```
 </details>
-
-## Cleanup
-
-To remove all resources created during the assignments, run:
-
-```bash
-./scripts/cleanup.sh
-```
