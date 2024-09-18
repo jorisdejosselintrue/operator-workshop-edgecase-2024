@@ -134,7 +134,7 @@ Now for this excersize we will not edit the operator directly but still use the 
 Now please make Jona stop '''''helping'''''. # Hint: in Ansible if you want to remove a resource the you can set `state: "absent"`
 
 Here is the solution directly if you are weak willed:
-```{r, foldcode=TRUE}
+```{r}
 The following cronjob is the one spanning the job that makes the barman drunk (Adds an integer):
 ❯ k get cronjobs.batch
 NAME                        SCHEDULE      TIMEZONE   SUSPEND   ACTIVE   LAST SCHEDULE   AGE
