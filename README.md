@@ -137,6 +137,7 @@ Here is the solution directly if you are weak willed:
 <details>
   <summary>Click me</summary>
   The following cronjob is the one spanning the job that makes the barman drunk (Adds an integer):
+
   ```
   ❯ k get cronjobs.batch
   NAME                        SCHEDULE      TIMEZONE   SUSPEND   ACTIVE   LAST SCHEDULE   AGE
