@@ -4,4 +4,5 @@
   group: town.ghcr.io
   kind: Bar
   role: bar
+  watchDependentResources: True
 #+kubebuilder:scaffold:watch

@@ -4,12 +4,13 @@ metadata:
   labels:
     app.kubernetes.io/name: waiter-operator
     app.kubernetes.io/managed-by: kustomize
-  name: bar-sample
+  name: bestbarintown
 spec:
   #image: ttl.sh/joriswebsitetest:0.0.1
   size: 1
   drinks:
     coffee:
+      amount: 1
       strength: strong
     beer:
       amount: 1

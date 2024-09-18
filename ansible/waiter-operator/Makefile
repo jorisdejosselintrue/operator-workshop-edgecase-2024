@@ -29,7 +29,7 @@ BUNDLE_METADATA_OPTS ?= $(BUNDLE_CHANNELS) $(BUNDLE_DEFAULT_CHANNEL)
 #
 # For example, running 'make bundle-build bundle-push catalog-build catalog-push' will build and push both
 # ghcr.io/waiter-operator-bundle:$VERSION and ghcr.io/waiter-operator-catalog:$VERSION.
-IMAGE_TAG_BASE ?= ghcr.io/waiter-operator
+IMAGE_TAG_BASE ?= ghcr.io/jorisdejosselintrue/waiter-operator
 
 # BUNDLE_IMG defines the image:tag used for the bundle.
 # You can use it as an arg. (E.g make bundle-build BUNDLE_IMG=<some-registry>/<project-name-bundle>:<tag>)
@@ -51,7 +51,8 @@ endif
 OPERATOR_SDK_VERSION ?= v1.36.1
 
 # Image URL to use all building/pushing image targets
-IMG ?= controller:latest
+# IMG ?= controller:latest
+IMG ?= $(IMAGE_TAG_BASE):$(VERSION)
 
 .PHONY: all
 all: docker-build
@@ -82,7 +83,7 @@ run: ansible-operator ## Run against the configured Kubernetes cluster in ~/.kub
 
 .PHONY: docker-build
 docker-build: ## Build docker image with the manager.
-	docker build -t ${IMG} .
+	docker build --platform linux/amd64 -t ${IMG} .
 
 .PHONY: docker-push
 docker-push: ## Push docker image with the manager.

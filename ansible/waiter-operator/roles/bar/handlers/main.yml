@@ -1,5 +1,17 @@
 ---
 # handlers file for Bar
-- name: restart deployment
+- name: Restart deployment
   ansible.builtin.shell:
     cmd: '/opt/ansible/kubectl rollout restart deployment {{ ansible_operator_meta.name }}-bar'
+- name: Sober up the barman
+  kubernetes.core.k8s:
+    kind: Bar
+    api_version: town.ghcr.io/v1alpha1
+    name: "{{ ansible_operator_meta.name }}"
+    namespace: "{{ ansible_operator_meta.namespace }}"  # Adjust if your CRD is in a different namespace
+    definition:
+      spec:
+        drinks:
+          barman:
+            amount_of_drinks_drunken: 0
+    merge_type: merge

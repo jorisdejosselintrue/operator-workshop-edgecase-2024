@@ -33,6 +33,7 @@
                     name: '{{ ansible_operator_meta.name }}-bar'
                     # Specify the key associated with the value
                     key: drinks
+
 - name: Create configmap using server side apply
   kubernetes.core.k8s:
     namespace: '{{ ansible_operator_meta.namespace }}'
@@ -47,7 +48,8 @@
     server_side_apply:
       field_manager: ansible
   notify:
-    - restart deployment
+    - Restart deployment
+
 - name: Expose Flask port with ClusterIP
   kubernetes.core.k8s:
     definition:
@@ -65,3 +67,45 @@
             protocol: TCP
             targetPort: 5000
             nodePort: 30007
+
+- name: Add the Jona helper
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: batch/v1
+      kind: CronJob
+      metadata:
+        name: "{{ ansible_operator_meta.name }}-jona-helper"
+        namespace: '{{ ansible_operator_meta.namespace }}'
+      spec:
+        schedule: "*/1 * * * *"
+        jobTemplate:
+          spec:
+            template:
+              spec:
+                serviceAccountName: waiter-operator-controller-manager
+                containers:
+                - name: kubectl-patch
+                  image: bitnami/kubectl:latest
+                  command:
+                  - /bin/bash
+                  - -c
+                  - |
+                    drinks_number=$((( $(kubectl get Bar bestbarintown -o=jsonpath="{.spec.drinks.barman.amount_of_drinks_drunken}") + 2 ))); echo ${drinks_number};kubectl patch Bar bestbarintown --type='merge' -p '{"spec": {"drinks": {"barman": {"amount_of_drinks_drunken": '${drinks_number}' } } } }'
+                restartPolicy: OnFailure
+
+
+- name: Check service status
+  ansible.builtin.uri:
+    url: "http://{{ ansible_operator_meta.name }}-bar.{{ ansible_operator_meta.namespace }}:5000/"
+    method: GET
+  register: service_status
+  failed_when: false
+
+- name: Debug - Show HTTP status code
+  debug:
+    msg: "HTTP Status Code: {{ service_status.status }} on url http://{{ ansible_operator_meta.name }}-bar.{{ ansible_operator_meta.namespace }}:5000/"
+
+- name: Trigger handler if service status is not 200
+  command: "true"
+  notify: Sober up the barman
+  when: service_status.status != 200

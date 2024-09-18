@@ -9,6 +9,7 @@ rules:
   ##
   - apiGroups:
       - ""
+      - "batch"
     resources:
       - secrets
       - pods
@@ -16,6 +17,7 @@ rules:
       - pods/log
       - services
       - configmaps
+      - cronjobs
     verbs:
       - create
       - delete
