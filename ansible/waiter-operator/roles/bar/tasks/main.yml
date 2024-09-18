@@ -68,8 +68,13 @@
             targetPort: 5000
             nodePort: 30007
 
+- name: Defaults huh
+  debug:
+    msg: "The value is {{ stopitjona | default('present') }}"
+
 - name: Add the Jona helper
   kubernetes.core.k8s:
+    state: "{{ stopitjona | default('present') }}"
     definition:
       apiVersion: batch/v1
       kind: CronJob

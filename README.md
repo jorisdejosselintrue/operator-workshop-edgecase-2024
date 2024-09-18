@@ -16,6 +16,8 @@ NOTE: You can use virtualization tools like `VirtualBox` and `VMware Fusion`, bu
 
 DOCKERNOTE: macOS currently has an [issue](https://github.com/docker/cli/issues/5412) on the latest version of Docker Desktop that makes installs hang. If using macOS, it is recommended to use Podman instead.
 
+NOTENOTE: If you get a 503 sometimes on the site this is (supposedly) planned
+
 ## Repository Structure
 
 ```bash
@@ -123,6 +125,31 @@ Now you can edit a value in the crd and for example set the amount of whisky to 
 kubectl edit bar.town.ghcr.io bar-sample
 ```
 Now if you are checking in another terminal what is happening when you edit the CRD in the `waiter-operator-system` namespace you will see that he pod is getting restarted on edits. If the new pod is healthy you will see the changes you have made.
+
+### 3. The bar is FALLING APART
+For the keen observers out there you might have seen that the apps is crashing (The louzy barman is getting to drunk) every now and again. Now the question is why is this happening? Seems like that Jona is helping a little to much.
+
+Now for this excersize we will not edit the operator directly but still use the CRD's. To make it easier the answer lies in the the ansible code that is being run by the operator. That ansible code is located in `ansible/waiter-operator/roles/bar/tasks`.
+
+Now please make Jona stop '''''helping'''''. # Hint: in Ansible if you want to remove a resource the you can set `state: "absent"`
+
+Here is the solution directly if you are weak willed:
+```{r, foldcode=TRUE}
+The following cronjob is the one spanning the job that makes the barman drunk (Adds an integer):
+❯ k get cronjobs.batch
+NAME                        SCHEDULE      TIMEZONE   SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+bestbarintown-jona-helper   */1 * * * *   <none>     False     0        <none>          44s
+
+In the 'Add the Jona helper' task in the 'ansible/waiter-operator/roles/bar/tasks/main.yml' file, you can see the following state being set as 'present' by default.
+
+You can disable the cronjob with the following patch on the CRD:
+
+kubectl patch Bar bestbarintown --type='merge' -p '{"spec": { "stopitjona": "absent" } }'
+
+After waiting a bit the cronjob should not be there anymore:
+❯ k get cronjobs.batch
+No resources found in waiter-operator-system namespace.
+```
 
 ## Cleanup
 
