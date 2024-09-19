@@ -20,7 +20,7 @@
           spec:
             containers:
             - name: bar
-              image: "{{ image | default('ttl.sh/joriswebsitetest') }}"
+              image: "{{ image | default('docker.io/jorisjosselin/waiter-operator-site:latest') }}"
               imagePullPolicy: Always
               ports:
                 - containerPort: 5000

@@ -1,8 +1,6 @@
 
 # Operator workshop edgecase 2024
 
-This repository contains assignments and examples for using custom operators with Minikube. These exercises will help you understand how to develop, deploy, and manage Kubernetes operators in a local development environment.
-
 ## Prerequisites
 
 Before you begin, ensure you have the following tools installed:

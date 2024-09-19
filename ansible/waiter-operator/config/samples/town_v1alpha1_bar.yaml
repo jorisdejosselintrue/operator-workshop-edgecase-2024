@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/managed-by: kustomize
   name: bestbarintown
 spec:
-  #image: ttl.sh/joriswebsitetest:0.0.1
+  #image: docker.io/jorisjosselin/waiter-operator-site:latest
   size: 1
   drinks:
     coffee:
