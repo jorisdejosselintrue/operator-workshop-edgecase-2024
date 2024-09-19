@@ -32,7 +32,7 @@ NOTENOTE: If you get a 503 sometimes on the site this is (supposedly) planned
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/your-username/operator-workshop-edgecase-2024.git
+   git clone https://github.com/jorisdejosselintrue/operator-workshop-edgecase-2024.git
    cd operator-workshop-edgecase-2024
    ```
 
@@ -63,13 +63,13 @@ It is recommend throughout these tasks to use tools like [k9s](https://k9scli.io
 
 ```bash
 cd ansible/waiter-operator/
-make deploy IMG=ghrc.io/jorisdejosselintrue/waiter-operator:latest
+make deploy IMG=docker.io/jorisjosselin/waiter-operator:latest
 ```
 
 ### 2. Install CRD and use it
 First lets switch to the namespace where the operator is installed:
 ```bash
-❯ kubectl config set-context --current --namespace=waiter-operator
+❯ kubectl config set-context --current --namespace=waiter-operator-system
 ```
 
 Now we can apply the CRD so that the underlying app the operator controls will be deployed:
@@ -87,13 +87,13 @@ waiter-operator-controller-manager-659c77dd4c-vz8gg   2/2     Running   0       
 
 If you have verified that the pod is running you can run the following minikube command to forward traffic to the pod with:
 ```bash
-minikube service bar-sample-bar -n waiter-operator-system
+minikube service bestbarintown-bar -n waiter-operator-system
 ```
 This should start your default browser with the website that has just been setup by the operator.
 
 Now look at the applied CRD with:
 ```bash
-❯ kubectl get bars.town.ghcr.io bar-sample -o yaml
+❯ kubectl get bars.town.ghcr.io bestbarintown -o yaml
 apiVersion: town.ghcr.io/v1alpha1
 kind: Bar
 metadata:
