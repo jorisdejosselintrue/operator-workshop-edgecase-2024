@@ -31,8 +31,9 @@ NOTENOTE: If you get a 503 sometimes on the site this is (supposedly) planned
 ## Getting Started
 
 1. Clone this repository:
+(if they don't use SSH keys on Github, how would they be able to clone?)
    ```bash
-   git clone https://github.com/your-username/operator-workshop-edgecase-2024.git
+   git clone https://github.com/jorisdejosselintrue/operator-workshop-edgecase-2024.git
    cd operator-workshop-edgecase-2024
    ```
 
@@ -63,13 +64,13 @@ It is recommend throughout these tasks to use tools like [k9s](https://k9scli.io
 
 ```bash
 cd ansible/waiter-operator/
-make deploy IMG=ghrc.io/jorisdejosselintrue/waiter-operator:latest
+make deploy IMG=docker.io/jorisjosselin/waiter-operator:latest
 ```
 
 ### 2. Install CRD and use it
 First lets switch to the namespace where the operator is installed:
 ```bash
-❯ kubectl config set-context --current --namespace=waiter-operator
+❯ kubectl config set-context --current --namespace=waiter-operator-system
 ```
 
 Now we can apply the CRD so that the underlying app the operator controls will be deployed:
@@ -85,15 +86,16 @@ bar-sample-bar-54759bd4d-mpg4n                        1/1     Running   0       
 waiter-operator-controller-manager-659c77dd4c-vz8gg   2/2     Running   0          3m4s
 ```
 
-If you have verified that the pod is running you can run the following minikube command to forward traffic to the pod with:
+If you have verified that the pod is running, run the following minikube command in a new terminal window to forward traffic to the pod:
 ```bash
-minikube service bar-sample-bar -n waiter-operator-system
+minikube update-context
+minikube service bestbarintown-bar -n waiter-operator-system
 ```
 This should start your default browser with the website that has just been setup by the operator.
 
 Now look at the applied CRD with:
 ```bash
-❯ kubectl get bars.town.ghcr.io bar-sample -o yaml
+❯ kubectl get bars.town.ghcr.io bestbarintown -o yaml
 apiVersion: town.ghcr.io/v1alpha1
 kind: Bar
 metadata:
@@ -163,3 +165,7 @@ Here is the solution directly if you are weak willed:
   No resources found in waiter-operator-system namespace.
   ```
 </details>
+
+
+- add drink gif or image to 5xx error page, something like
+https://tenor.com/en-GB/search/drunk-gifs
