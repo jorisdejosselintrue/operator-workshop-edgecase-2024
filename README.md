@@ -165,3 +165,7 @@ Here is the solution directly if you are weak willed:
   No resources found in waiter-operator-system namespace.
   ```
 </details>
+
+
+- add drink gif or image to 5xx error page, something like
+https://tenor.com/en-GB/search/drunk-gifs
