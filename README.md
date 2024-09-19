@@ -31,6 +31,7 @@ NOTENOTE: If you get a 503 sometimes on the site this is (supposedly) planned
 ## Getting Started
 
 1. Clone this repository:
+(if they don't use SSH keys on Github, how would they be able to clone?)
    ```bash
    git clone https://github.com/jorisdejosselintrue/operator-workshop-edgecase-2024.git
    cd operator-workshop-edgecase-2024
@@ -85,8 +86,9 @@ bar-sample-bar-54759bd4d-mpg4n                        1/1     Running   0       
 waiter-operator-controller-manager-659c77dd4c-vz8gg   2/2     Running   0          3m4s
 ```
 
-If you have verified that the pod is running you can run the following minikube command to forward traffic to the pod with:
+If you have verified that the pod is running, run the following minikube command in a new terminal window to forward traffic to the pod:
 ```bash
+minikube update-context
 minikube service bestbarintown-bar -n waiter-operator-system
 ```
 This should start your default browser with the website that has just been setup by the operator.
