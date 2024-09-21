@@ -78,12 +78,12 @@ make deploy IMG=trcr.nl/ec/waiter-operator:latest
 ### 2. Install CRD and use it
 First lets switch to the namespace where the operator is installed:
 ```bash
-❯ kubectl config set-context --current --namespace=waiter-operator-system
+kubectl config set-context --current --namespace=waiter-operator-system
 ```
 
 Now we can apply the CRD so that the underlying app the operator controls will be deployed:
 ```bash
-❯ kubectl apply -f config/samples/town_v1alpha1_bar.yaml
+kubectl apply -f config/samples/town_v1alpha1_bar.yaml
 ```
 
 Now this should have deployed a pod next to the operator controller pod called bar-sample:
