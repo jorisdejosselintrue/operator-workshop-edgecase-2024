@@ -21,7 +21,7 @@
             containers:
             - name: bar
               image: "{{ image | default('docker.io/jorisjosselin/waiter-operator-site:latest') }}"
-              imagePullPolicy: Always
+              imagePullPolicy: IfNotPresent
               ports:
                 - containerPort: 5000
               env:

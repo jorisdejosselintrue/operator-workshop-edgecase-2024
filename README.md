@@ -31,7 +31,6 @@ NOTENOTE: If you get a 503 sometimes on the site this is (supposedly) planned
 ## Getting Started
 
 1. Clone this repository:
-(if they don't use SSH keys on Github, how would they be able to clone?)
    ```bash
    git clone https://github.com/jorisdejosselintrue/operator-workshop-edgecase-2024.git
    cd operator-workshop-edgecase-2024
@@ -67,6 +66,13 @@ cd ansible/waiter-operator/
 make deploy IMG=docker.io/jorisjosselin/waiter-operator:latest
 ```
 
+<details>
+  <summary>If you get pull errors please use the following make command</summary>
+```bash
+make deploy IMG=trcr.nl/ec/waiter-operator:latest
+```
+</details>
+
 ### 2. Install CRD and use it
 First lets switch to the namespace where the operator is installed:
 ```bash
@@ -86,7 +92,14 @@ bar-sample-bar-54759bd4d-mpg4n                        1/1     Running   0       
 waiter-operator-controller-manager-659c77dd4c-vz8gg   2/2     Running   0          3m4s
 ```
 
-If you have verified that the pod is running, run the following minikube command in a new terminal window to forward traffic to the pod:
+<details>
+  <summary>If you also get pull errors here please use the following make command</summary>
+```bash
+kubectl patch Bar bestbarintown --type='merge' -p '{"spec": { "image": "trcr.nl/ec/waiter-operator-site" } }'
+```
+</details>
+
+If you have verified that the pod is running, run the following minikube command in a **new terminal window** to forward traffic to the pod:
 ```bash
 minikube update-context
 minikube service bestbarintown-bar -n waiter-operator-system
@@ -127,13 +140,13 @@ kubectl edit bar.town.ghcr.io bestbarintown
 Now if you are checking in another terminal what is happening when you edit the CRD in the `waiter-operator-system` namespace you will see that he pod is getting restarted on edits. If the new pod is healthy you will see the changes you have made.
 
 ### 3. The bar is FALLING APART
-For the keen observers out there you might have seen that the apps is crashing (The lousy barman is getting to drunk) every now and again. Now the question is why is this happening? Seems like that Jona is helping a little to much.
+For the keen observers out there you might have seen that the apps is crashing (The lousy barman is getting to drunk) every now and again. Now the question is why is this happening? Seems like that Jona is helping a little too much.
 
 Now for this exercise we will not edit the operator directly but still use the CRD's. To make it easier the answer lies in the the ansible code that is being run by the operator. That ansible code is located in `ansible/waiter-operator/roles/bar/tasks`.
 
 Now please make Jona stop '''''helping'''''. # Hint: in Ansible if you want to remove a resource you can set `state: "absent"`
 
-Here is the solution directly if you are weak willed:
+Here is the solution directly (but we implore you to at least try):
 <details>
   <summary>Reveal me</summary>
   The following cronjob is the one spanning the job that makes the barman drunk (Adds an integer):
@@ -165,7 +178,3 @@ Here is the solution directly if you are weak willed:
   No resources found in waiter-operator-system namespace.
   ```
 </details>
-
-
-- add drink gif or image to 5xx error page, something like
-https://tenor.com/en-GB/search/drunk-gifs
