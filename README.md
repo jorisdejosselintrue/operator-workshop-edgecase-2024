@@ -68,9 +68,11 @@ make deploy IMG=docker.io/jorisjosselin/waiter-operator:latest
 
 <details>
   <summary>If you get pull errors please use the following make command</summary>
+
 ```bash
 make deploy IMG=trcr.nl/ec/waiter-operator:latest
 ```
+
 </details>
 
 ### 2. Install CRD and use it
@@ -98,6 +100,7 @@ waiter-operator-controller-manager-659c77dd4c-vz8gg   2/2     Running   0       
 ```bash
 kubectl patch Bar bestbarintown --type='merge' -p '{"spec": { "image": "trcr.nl/ec/waiter-operator-site" } }'
 ```
+
 </details>
 
 If you have verified that the pod is running, run the following minikube command in a **new terminal window** to forward traffic to the pod:
