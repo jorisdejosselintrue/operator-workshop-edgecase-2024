@@ -137,11 +137,17 @@ spec:
 ```
 The values shown should be the same as on the website.
 
-Now you can edit a value in the crd and for example set the amount of whisky to 5:
+Now you can edit a value in the CRD and for example set the amount of whisky to 5:
 
 ```bash
 kubectl edit bar.town.ghcr.io bestbarintown
 ```
+Alternatively if this opens an editor you do not want to use, you can do set the a variable setting the default editor this could be for example `nano`. This examples shows how to use vscode:
+```bash
+EDITOR='code --wait'; kubectl edit bar.town.ghcr.io bestbarintown
+```
+you will have to close the file in the vscode editor for it to change the CRD.
+
 Now if you are checking in another terminal what is happening when you edit the CRD in the `waiter-operator-system` namespace you will see that he pod is getting restarted on edits. If the new pod is healthy you will see the changes you have made.
 
 ### 3. The bar is FALLING APART
