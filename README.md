@@ -94,6 +94,7 @@ waiter-operator-controller-manager-659c77dd4c-vz8gg   2/2     Running   0       
 
 <details>
   <summary>If you also get pull errors here please use the following make command</summary>
+
 ```bash
 kubectl patch Bar bestbarintown --type='merge' -p '{"spec": { "image": "trcr.nl/ec/waiter-operator-site" } }'
 ```
@@ -134,6 +135,7 @@ spec:
 The values shown should be the same as on the website.
 
 Now you can edit a value in the crd and for example set the amount of whisky to 5:
+
 ```bash
 kubectl edit bar.town.ghcr.io bestbarintown
 ```
