@@ -19,7 +19,7 @@ Before you begin, ensure you have the following tools installed:
 > **Download at https://github.com/kubernetes/minikube/releases/download/v1.34.0/minikube-darwin-arm64**
 > 
 > To fix this with Homebrew you need to [reinstall Homebrew](https://github.com/Homebrew/install?tab=readme-ov-file#uninstall-homebrew)
-or install minikube with the [Binary download method](https://minikube.sigs.k8s.io/docs/start/.
+or install minikube with the [Binary download method](https://minikube.sigs.k8s.io/docs/start/).
 
 > DOCKERNOTE: macOS currently has an [issue](https://github.com/docker/cli/issues/5412) on the latest version of Docker Desktop that makes installs hang. If using macOS, it is recommended to use Podman instead.
 
