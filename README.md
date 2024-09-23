@@ -5,16 +5,29 @@
 
 Before you begin, ensure you have the following tools installed:
 
-- [Minikube](https://minikube.sigs.k8s.io/docs/start/)
+- [Minikube](https://minikube.sigs.k8s.io/docs/start/) (or a working Kubernetes cluster)
 - [kubectl](https://kubernetes.io/docs/tasks/tools/)
 - [Docker](https://docs.docker.com/get-docker/) or [Podman](https://podman.io/docs/installation)
 - [Make](https://www.gnu.org/software/make/) which for Windows you can install the binary from [here](https://gnuwin32.sourceforge.net/packages/make.htm) but we would recommend using [Ubuntu WSL for Windows](https://ubuntu.com/desktop/wsl)
 
 > NOTE: You can use virtualization tools like `VirtualBox` and `VMware Fusion`, but with these, the command `minikube service <svc> -n <namespace>` will probably not work anymore. You will have to use `kubectl port-forward -n <namespace> <svc>` instead, which unfortunately will have to be killed and restarted every time the CRD is edited.
 
+> NOTE: After installing `minikube` with Homebrew on an M1 MacBook you can get the error:
+```
+You are trying to run the amd64 binary on an Ml system.
+Please consider running the darwin/arm64 binary instead.
+Download at https://github.com/kubernetes/minikube/releases/download/v1.34.0/minikube-darwin-arm64
+```
+> To fix this with Homebrew you need to [reinstall Homebrew](https://github.com/Homebrew/install?tab=readme-ov-file#uninstall-homebrew)
+or install minikube with the [Binary download method](https://minikube.sigs.k8s.io/docs/start/.
+
 > DOCKERNOTE: macOS currently has an [issue](https://github.com/docker/cli/issues/5412) on the latest version of Docker Desktop that makes installs hang. If using macOS, it is recommended to use Podman instead.
 
 > NOTENOTE: Sometimes you will encounter a 503 error on the web app. This is (supposedly) part of the workshop.
+
+#### Optional
+
+- [k9s](https://k9scli.io)
 
 ## Repository Structure
 
@@ -50,9 +63,10 @@ Before you begin, ensure you have the following tools installed:
    ```
    Should give you something like the following output:
    ```bash
-   ❯ kubectl get nodes
-    NAME       STATUS   ROLES           AGE   VERSION
-    minikube   Ready    control-plane   53s   v1.31.0
+   kubectl get nodes
+
+   NAME       STATUS   ROLES           AGE   VERSION
+   minikube   Ready    control-plane   53s   v1.31.0
    ```
 
 ## Assignments
@@ -76,6 +90,7 @@ make deploy IMG=trcr.nl/ec/waiter-operator:latest
 </details>
 
 ### 2. Install CRD and use it
+
 First lets switch to the namespace where the operator is installed:
 ```bash
 kubectl config set-context --current --namespace=waiter-operator-system
@@ -88,7 +103,7 @@ kubectl apply -f config/samples/town_v1alpha1_bar.yaml
 
 Now this should have deployed a pod next to the operator controller pod called bar-sample:
 ```bash
-❯ kubectl get pod
+kubectl get pod
 NAME                                                  READY   STATUS    RESTARTS   AGE
 bar-sample-bar-54759bd4d-mpg4n                        1/1     Running   0          63s
 waiter-operator-controller-manager-659c77dd4c-vz8gg   2/2     Running   0          3m4s
@@ -112,7 +127,9 @@ This should start your default browser with the website that has just been setup
 
 Now look at the applied CRD with:
 ```bash
-❯ kubectl get bars.town.ghcr.io bestbarintown -o yaml
+kubectl get bars.town.ghcr.io bestbarintown -o yaml
+```
+```yaml
 apiVersion: town.ghcr.io/v1alpha1
 kind: Bar
 metadata:
@@ -142,15 +159,19 @@ Now you can edit a value in the CRD and for example set the amount of whisky to 
 ```bash
 kubectl edit bar.town.ghcr.io bestbarintown
 ```
-Alternatively if this opens an editor you do not want to use, you can do set the a variable setting the default editor this could be for example `nano`. This examples shows how to use vscode:
+Alternatively if this opens an editor you do not want to use, you can do set the a variable setting the default editor this could be for example `nano`. These examples show how to use `vscode` or `nano`:
 ```bash
 EDITOR='code --wait'; kubectl edit bar.town.ghcr.io bestbarintown
 ```
-you will have to close the file in the vscode editor for it to change the CRD.
+> NOTE: You will have to close the file in the vscode editor for it to change the CRD.
+```bash
+EDITOR='nano'; kubectl edit bar.town.ghcr.io bestbarintown
+```
 
 Now if you are checking in another terminal what is happening when you edit the CRD in the `waiter-operator-system` namespace you will see that he pod is getting restarted on edits. If the new pod is healthy you will see the changes you have made.
 
 ### 3. The bar is FALLING APART
+
 For the keen observers out there you might have seen that the apps is crashing (The lousy barman is getting to drunk) every now and again. Now the question is why is this happening? Seems like that Jona is helping a little too much.
 
 Now for this exercise we will not edit the operator directly but still use the CRD's. To make it easier the answer lies in the the ansible code that is being run by the operator. That ansible code is located in `ansible/waiter-operator/roles/bar/tasks`.
@@ -162,15 +183,16 @@ Here is the solution directly (but we implore you to at least try):
   <summary>Reveal me</summary>
   The following cronjob is the one spanning the job that makes the barman drunk (Adds an integer):
 
-  ```
-  ❯ kubectl get cronjobs.batch
+  ```bash
+  kubectl get cronjobs.batch
+
   NAME                        SCHEDULE      TIMEZONE   SUSPEND   ACTIVE   LAST SCHEDULE   AGE
   bestbarintown-jona-helper   */1 * * * *   <none>     False     0        <none>          44s
   ```
 
   In the 'Add the Jona helper' task in the 'ansible/waiter-operator/roles/bar/tasks/main.yml' file, you can see the following state being set as 'present' by default:
 
-  ```
+  ```yaml
   - name: Add the Jona helper
     kubernetes.core.k8s:
       state: "{{ stopitjona | default('present') }}"
@@ -178,14 +200,15 @@ Here is the solution directly (but we implore you to at least try):
 
   You can disable the cronjob with the following patch on the CRD:
 
-  ```
+  ```bash
   kubectl patch Bar bestbarintown --type='merge' -p '{"spec": { "stopitjona": "absent" } }'
   ```
 
   After waiting a bit the cronjob should not be there anymore:
 
-  ```
-  ❯ k get cronjobs.batch
+  ```bash
+  kubectl get cronjobs.batch
+
   No resources found in waiter-operator-system namespace.
   ```
 </details>
