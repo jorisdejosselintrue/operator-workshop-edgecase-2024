@@ -5,4 +5,4 @@ kind: Kustomization
 images:
 - name: controller
   newName: trcr.nl/ec/waiter-operator
-  newTag: 1.0.4
+  newTag: 1.0.5
