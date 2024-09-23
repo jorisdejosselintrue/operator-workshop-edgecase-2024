@@ -1,0 +1,23 @@
+# permissions for end users to view bars.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: waiter-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: bar-viewer-role
+rules:
+- apiGroups:
+  - town.ghcr.io
+  resources:
+  - bars
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - town.ghcr.io
+  resources:
+  - bars/status
+  verbs:
+  - get

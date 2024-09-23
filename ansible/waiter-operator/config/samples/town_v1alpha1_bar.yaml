@@ -1,0 +1,25 @@
+apiVersion: town.ghcr.io/v1alpha1
+kind: Bar
+metadata:
+  labels:
+    app.kubernetes.io/name: waiter-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: bestbarintown
+spec:
+  #image: docker.io/jorisjosselin/waiter-operator-site:latest
+  size: 1
+  drinks:
+    coffee:
+      amount: 1
+      strength: strong
+    beer:
+      amount: 1
+      type: IPA
+    tea:
+      amount: 1
+      flavor: green
+    whisky:
+      amount: 1
+      flavor: japaneseWood
+    barman:
+      amount_of_drinks_drunken: 0

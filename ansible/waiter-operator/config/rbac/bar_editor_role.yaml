@@ -1,0 +1,27 @@
+# permissions for end users to edit bars.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: waiter-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: bar-editor-role
+rules:
+- apiGroups:
+  - town.ghcr.io
+  resources:
+  - bars
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - town.ghcr.io
+  resources:
+  - bars/status
+  verbs:
+  - get

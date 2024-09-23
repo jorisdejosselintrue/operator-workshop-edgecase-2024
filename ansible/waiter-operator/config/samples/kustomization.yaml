@@ -1,0 +1,4 @@
+## Append samples of your project ##
+resources:
+- town_v1alpha1_bar.yaml
+#+kubebuilder:scaffold:manifestskustomizesamples

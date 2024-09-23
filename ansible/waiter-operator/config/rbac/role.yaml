@@ -1,0 +1,61 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: manager-role
+rules:
+  ##
+  ## Base operator rules
+  ##
+  - apiGroups:
+      - ""
+      - "batch"
+    resources:
+      - secrets
+      - pods
+      - pods/exec
+      - pods/log
+      - services
+      - configmaps
+      - cronjobs
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - apps
+    resources:
+      - deployments
+      - daemonsets
+      - replicasets
+      - statefulsets
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  ##
+  ## Rules for town.ghcr.io/v1alpha1, Kind: Bar
+  ##
+  - apiGroups:
+      - town.ghcr.io
+    resources:
+      - bars
+      - bars/status
+      - bars/finalizers
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+#+kubebuilder:scaffold:rules
