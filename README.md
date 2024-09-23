@@ -5,7 +5,7 @@
 
 Before you begin, ensure you have the following tools installed:
 
-- [Minikube](https://minikube.sigs.k8s.io/docs/start/) (or a working Kubernetes cluster)
+- [Minikube](https://minikube.sigs.k8s.io/docs/start/) (or your own working Kubernetes cluster)
 - [kubectl](https://kubernetes.io/docs/tasks/tools/)
 - [Docker](https://docs.docker.com/get-docker/) or [Podman](https://podman.io/docs/installation)
 - [Make](https://www.gnu.org/software/make/) which for Windows you can install the binary from [here](https://gnuwin32.sourceforge.net/packages/make.htm) but we would recommend using [Ubuntu WSL for Windows](https://ubuntu.com/desktop/wsl)
@@ -13,11 +13,11 @@ Before you begin, ensure you have the following tools installed:
 > NOTE: You can use virtualization tools like `VirtualBox` and `VMware Fusion`, but with these, the command `minikube service <svc> -n <namespace>` will probably not work anymore. You will have to use `kubectl port-forward -n <namespace> <svc>` instead, which unfortunately will have to be killed and restarted every time the CRD is edited.
 
 > NOTE: After installing `minikube` with Homebrew on an M1 MacBook you can get the error:
-```
-You are trying to run the amd64 binary on an Ml system.
-Please consider running the darwin/arm64 binary instead.
-Download at https://github.com/kubernetes/minikube/releases/download/v1.34.0/minikube-darwin-arm64
-```
+> 
+> **You are trying to run the amd64 binary on an Ml system.**
+> **Please consider running the darwin/arm64 binary instead.**
+> **Download at https://github.com/kubernetes/minikube/releases/download/v1.34.0/minikube-darwin-arm64**
+> 
 > To fix this with Homebrew you need to [reinstall Homebrew](https://github.com/Homebrew/install?tab=readme-ov-file#uninstall-homebrew)
 or install minikube with the [Binary download method](https://minikube.sigs.k8s.io/docs/start/.
 
