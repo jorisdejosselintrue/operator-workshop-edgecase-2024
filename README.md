@@ -1,3 +1,4 @@
+> **You can view the slides or our presentation here: [https://github.com/jorisdejosselintrue/operator-workshop-edgecase-2024/wiki/Presentation](https://github.com/jorisdejosselintrue/operator-workshop-edgecase-2024/wiki/Presentation)**
 
 # Operator workshop edgecase 2024
 
